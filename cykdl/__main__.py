@@ -145,7 +145,16 @@ def main():
             'https': args.proxy
         })
     if not args.proxy == 'none':
+        from base64 import b64encode
+
+        CRAWLERA_CHINA = '267cbd49f1ce4d46a8dc28896fec7faa:'
+
+        base64_param = b64encode(CRAWLERA_CHINA.encode('utf-8')).decode('ascii')
+
         opener = build_opener(proxy_handler)
+        opener.addheaders=[
+            ('Proxy-Authorization', 'Basic ' + base64_param),
+        ]
         install_opener(opener)
         default_proxy_handler[:] = [proxy_handler]
 
